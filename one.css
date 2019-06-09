@@ -1,0 +1,8 @@
+.map{
+    border:  1px solid #000000;
+    margin: 100px auto;
+    width: 500px;
+    height: 500px;
+    position: relative;
+    background: aliceblue;
+}
