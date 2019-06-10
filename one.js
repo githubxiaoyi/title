@@ -39,25 +39,24 @@ function snake() {
             snake.display();
         }
         //蛇咬到自己
-        if (snake.body.length>4){
-            for(var i=4;i<snake.body.length;i++){
-                if (snake.body[0].x==snake.body[i].x&&snake.body[0].y==snake.body[i].y){
-                    alert(重新开始);
-                    map.removeChild(food.ele);
-                    food.display();
-                    for(var i=0;i<this.body.length;i++){
-                        map.removeChild(snake.body[i]['ele']);
-                    }
-                    snake.direction='right';
-                    snake.body=[
-                        {x:2,y:0,ele:null},
-                        {x:1,y:0,ele:null},
-                        {x:0,y:0,ele:null}
-                    ]
-                    snake.display();
+
+        for(var i=1;i<snake.body.length;i++){
+            if (snake.body[0].x==snake.body[i].x&&snake.body[0].y==snake.body[i].y){
+                map.removeChild(food.ele);
+                food.display();
+                for(var i=0;i<this.body.length;i++){
+                    map.removeChild(snake.body[i]['ele']);
                 }
+                snake.direction='right';
+                snake.body=[
+                    {x:2,y:0,ele:null},
+                    {x:1,y:0,ele:null},
+                    {x:0,y:0,ele:null}
+                    ]
+                snake.display();
             }
         }
+
 
         //除第一个蛇外 其余蛇获取前一个蛇的坐标
         for(var i=this.body.length-1;i>0;i--){
@@ -132,23 +131,23 @@ document.onkeydown=function (e) {
         case 37:
             if (snake.direction!='right'){
                 snake.direction='left';
-                break;
             }
+            break;
         case 40:
             if (snake.direction!='down'){
                 snake.direction='up';
-                break;
             }
+            break;
         case 39:
             if (snake.direction!='left'){
                 snake.direction='right';
-                break;
             }
+            break;
         case 38:
             if (snake.direction!='up'){
                 snake.direction='down';
-                break;
             }
+            break;
     }
 }
 
