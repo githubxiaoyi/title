@@ -16,7 +16,7 @@ function snake() {
                 s.style.position='absolute';
                 s.style.top=this.height*this.body[i].y+'px';
                 s.style.left=this.width*this.body[i].x+'px';
-                s.style.background='rgb(123,123,123)';
+                s.style.background='url(images/snake_body.png)';
                 this.body[i]['ele']=s;
                 map.appendChild(s);
             }
@@ -66,15 +66,19 @@ function snake() {
         switch (this.direction) {
             case 'left':
                 this.body[0].x-=1;
+                this.body[0].ele.style.background='url(images/snake_tail_left.png)';
                 break;
             case 'right':
                 this.body[0].x+=1;
+                this.body[0].ele.style.background='url(images/snake_tail_left.png)';
                 break;
             case 'up':
                 this.body[0].y+=1;
+                this.body[0].ele.style.background='url(images/snake_tail_left.png)';
                 break;
             case 'down':
                 this.body[0].y-=1;
+                this.body[0].ele.style.background='url(images/snake_tail_left.png)';
                 break;
         }
         this.move();
@@ -85,30 +89,36 @@ function snake() {
             map.removeChild(food.ele);
             food.display();
             var length=this.body.length;
+            //吃到之后改变倒数第二个的图标
+            snake.body[length-1].ele.style.background='url(images/snake_body.png)';
             var last={x:null,y:null,ele:null};
             if (this.body[length-1].x==this.body[length-2].x){
                 if (this.body[length-1].y<this.body[length-2].y){
                     last.x=this.body[length-1].x;
                     last.y=this.body[length-1].y-1;
+                    last.pic='url(images/snake_tail_right.png)';
                 }else if(this.body[length-1].y>this.body[length-2].y){
                     last.x=this.body[length-1].x;
                     last.y=this.body[length-1].y+1;
+                    last.pic='url(images/snake_tail_left.png)';
                 }
             }
             if (this.body[length-1].y==this.body[length-2].y){
                 if (this.body[length-1].x<this.body[length-2].x) {
                     last.y = this.body[length - 1].y;
                     last.x = this.body[length - 1].x -1;
+                    last.pic='url(images/snake_tail_bottom.png)';
                 } else if(this.body[length-1].x>this.body[length-2].x){
                     last.y = this.body[length - 1].y;
                     last.x = this.body[length - 1].x +1;
+                    last.pic='url(images/snake_tail_top.png)';
                 }
             }
             sss=document.createElement("div");
             sss.style.width=this.width+'px';
             sss.style.height=this.height+'px';
             sss.style.position='absolute';
-            sss.style.background='rgb(123,123,123)';
+            sss.style.background=last.pic;
             sss.style.top=last.y*sss.height+'px';
             sss.style.left=last.x*sss.width+'px';
             last['ele']=sss;
@@ -131,21 +141,25 @@ document.onkeydown=function (e) {
         case 37:
             if (snake.direction!='right'){
                 snake.direction='left';
+                snake.body[0].ele.style.background='url(images/snake_head_left.png)';
             }
             break;
         case 40:
             if (snake.direction!='down'){
                 snake.direction='up';
+                snake.body[0].ele.style.background='url(images/snake_head_left.png)';
             }
             break;
         case 39:
             if (snake.direction!='left'){
                 snake.direction='right';
+                snake.body[0].ele.style.background='url(images/snake_head_left.png)';
             }
             break;
         case 38:
             if (snake.direction!='up'){
                 snake.direction='down';
+                snake.body[0].ele.style.background='url(images/snake_head_left.png)';
             }
             break;
     }
@@ -160,8 +174,8 @@ function food() {
         ss.style.width=this.width+'px';
         ss.style.height=this.height+'px';
         ss.style.position='absolute';
-        this.x=Math.floor(Math.random()*10);
-        this.y=Math.floor(Math.random()*10);
+        this.x=Math.floor(Math.random()*50);
+        this.y=Math.floor(Math.random()*50);
         ss.style.left=this.x*this.width+'px';
         ss.style.top=this.y*this.height+'px';
         ss.style.background='rgb(1,1,1)';
