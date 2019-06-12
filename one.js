@@ -17,14 +17,14 @@ function snake() {
                 s.style.top=this.height*this.body[i].y+'px';
                 s.style.left=this.width*this.body[i].x+'px';
                 s.style.background='url(images/snake_body.png)';
-                this.body[i]['ele']=s;
+                snake.body[i]['ele']=s;
                 map.appendChild(s);
             }
         }
     }
     this.run=function () {
         //蛇出线
-        if(snake.body[0].x<0||snake.body[0].x>500||snake.body[0].y<0||snake.body[0].y>500){
+        if(snake.body[0].x<0||snake.body[0].x>50||snake.body[0].y<0||snake.body[0].y>50){
             map.removeChild(food.ele);
             food.display();
             for(var i=0;i<this.body.length;i++){
@@ -63,22 +63,27 @@ function snake() {
             this.body[i].x=this.body[i-1].x;
             this.body[i].y=this.body[i-1].y;
         }
+        var length=this.body.length;
         switch (this.direction) {
             case 'left':
                 this.body[0].x-=1;
-                this.body[0].ele.style.background='url(images/snake_tail_left.png)';
+                this.body[0].ele.style.background='url(images/snake_head_left.png)';
+                this.body[length-1].ele.style.background='url(images/snake_tail_left.png)';
                 break;
             case 'right':
                 this.body[0].x+=1;
-                this.body[0].ele.style.background='url(images/snake_tail_left.png)';
+                this.body[0].ele.style.background='url(images/snake_head_right.png)';
+                this.body[length-1].ele.style.background='url(images/snake_tail_right.png)';
                 break;
             case 'up':
                 this.body[0].y+=1;
-                this.body[0].ele.style.background='url(images/snake_tail_left.png)';
+                this.body[0].ele.style.background='url(images/snake_head_bottom.png)';
+                this.body[length-1].ele.style.background='url(images/snake_tail_bottom.png)';
                 break;
             case 'down':
                 this.body[0].y-=1;
-                this.body[0].ele.style.background='url(images/snake_tail_left.png)';
+                this.body[0].ele.style.background='url(images/snake_head_top.png)';
+                this.body[length-1].ele.style.background='url(images/snake_tail_top.png)';
                 break;
         }
         this.move();
@@ -141,13 +146,13 @@ document.onkeydown=function (e) {
         case 37:
             if (snake.direction!='right'){
                 snake.direction='left';
-                snake.body[0].ele.style.background='url(images/snake_head_left.png)';
+                snake.body[0].ele.style.background='url(images/snake_head_right.png)';
             }
             break;
         case 40:
             if (snake.direction!='down'){
                 snake.direction='up';
-                snake.body[0].ele.style.background='url(images/snake_head_left.png)';
+                snake.body[0].ele.style.background='url(images/snake_head_top.png)';
             }
             break;
         case 39:
@@ -159,7 +164,7 @@ document.onkeydown=function (e) {
         case 38:
             if (snake.direction!='up'){
                 snake.direction='down';
-                snake.body[0].ele.style.background='url(images/snake_head_left.png)';
+                snake.body[0].ele.style.background='url(images/snake_head_bottom.png)';
             }
             break;
     }
