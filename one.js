@@ -164,7 +164,6 @@ document.onkeydown=function (e) {
             break;
     }
 }
-
 function food() {
     this.width=10;
     this.height=10;
