@@ -24,17 +24,17 @@ function snake() {
     }
     this.run=function () {
         //蛇出线
-        if(snake.body[0].x<0||snake.body[0].x>50||snake.body[0].y<0||snake.body[0].y>50){
+      if (snake.body[0].x < 0 || snake.body[0].x > 49 || this.body[0].y < 0 || this.body[0].y > 49) {
             map.removeChild(food.ele);
             food.display();
-            for(var i=0;i<this.body.length;i++){
+            for (var i = 0; i < this.body.length; i++) {
                 map.removeChild(snake.body[i]['ele']);
             }
-            snake.direction='right';
-            snake.body=[
-                {x:2,y:0,ele:null},
-                {x:1,y:0,ele:null},
-                {x:0,y:0,ele:null}
+            snake.direction = 'right';
+            snake.body = [
+                {x: 2, y: 0, ele: null},
+                {x: 1, y: 0, ele: null},
+                {x: 0, y: 0, ele: null}
             ]
             snake.display();
         }
@@ -57,7 +57,6 @@ function snake() {
             }
         }
 
-
         //除第一个蛇外 其余蛇获取前一个蛇的坐标
         for(var i=this.body.length-1;i>0;i--){
             this.body[i].x=this.body[i-1].x;
@@ -68,25 +67,26 @@ function snake() {
             case 'left':
                 this.body[0].x-=1;
                 this.body[0].ele.style.background='url(images/snake_head_left.png)';
-                this.body[length-1].ele.style.background='url(images/snake_tail_left.png)';
+                //this.body[length-1].ele.style.background='url(images/snake_tail_left.png)';
                 break;
             case 'right':
                 this.body[0].x+=1;
                 this.body[0].ele.style.background='url(images/snake_head_right.png)';
-                this.body[length-1].ele.style.background='url(images/snake_tail_right.png)';
+               // this.body[length-1].ele.style.background='url(images/snake_tail_right.png)';
                 break;
             case 'up':
                 this.body[0].y+=1;
                 this.body[0].ele.style.background='url(images/snake_head_bottom.png)';
-                this.body[length-1].ele.style.background='url(images/snake_tail_bottom.png)';
+               // this.body[length-1].ele.style.background='url(images/snake_tail_bottom.png)';
                 break;
             case 'down':
                 this.body[0].y-=1;
                 this.body[0].ele.style.background='url(images/snake_head_top.png)';
-                this.body[length-1].ele.style.background='url(images/snake_tail_top.png)';
+                //this.body[length-1].ele.style.background='url(images/snake_tail_top.png)';
                 break;
         }
         this.move();
+
     }
 
     this.move=function () {
@@ -129,42 +129,60 @@ function snake() {
             last['ele']=sss;
             map.appendChild(sss);
             snake.body.push(last);
-            console.log(last.x);
         }
         for (i=0;i<this.body.length;i++){
             var array=this.body[i];
             array.ele.style.top=this.height*this.body[i].y+'px';
             array.ele.style.left=this.width*this.body[i].x+'px';
         }
-
+        var length=this.body.length;
+        if (this.body[length-1].x==this.body[length-2].x){
+            if (this.body[length-1].y<this.body[length-2].y){
+                this.body[length-1].ele.style.background='url(images/snake_tail_bottom.png)';
+                console.log(1);
+            }else if(this.body[length-1].y>this.body[length-2].y){
+                this.body[length-1].ele.style.background='url(images/snake_tail_top.png)';
+                console.log(2);
+            }
+        }
+        if (this.body[length-1].y==this.body[length-2].y){
+            if (this.body[length-1].x<this.body[length-2].x){
+                this.body[length-1].ele.style.background='url(images/snake_tail_right.png)';
+                console.log(1);
+            }else if(this.body[length-1].x>this.body[length-2].x){
+                this.body[length-1].ele.style.background='url(images/snake_tail_left.png)';
+                console.log(2);
+            }
+        }
     }
 }
 //上下左右
 document.onkeydown=function (e) {
     var e=window.event||e;
     switch (e.keyCode) {
+        //按键盘直接转向
         case 37:
             if (snake.direction!='right'){
                 snake.direction='left';
-                snake.body[0].ele.style.background='url(images/snake_head_right.png)';
+              //  snake.body[0].ele.style.background='url(images/snake_head_left.png)';
             }
             break;
         case 40:
             if (snake.direction!='down'){
                 snake.direction='up';
-                snake.body[0].ele.style.background='url(images/snake_head_top.png)';
+             //   snake.body[0].ele.style.background='url(images/snake_head_top.png)';
             }
             break;
         case 39:
             if (snake.direction!='left'){
                 snake.direction='right';
-                snake.body[0].ele.style.background='url(images/snake_head_left.png)';
+               // snake.body[0].ele.style.background='url(images/snake_head_right.png)';
             }
             break;
         case 38:
             if (snake.direction!='up'){
                 snake.direction='down';
-                snake.body[0].ele.style.background='url(images/snake_head_bottom.png)';
+                //snake.body[0].ele.style.background='url(images/snake_head_bottom.png)';
             }
             break;
     }
